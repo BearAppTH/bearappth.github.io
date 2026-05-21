@@ -7,13 +7,13 @@ Never push directly to `main`.
 ## Workflow — REQUIRED every time
 After **every** commit + push (no exceptions):
 1. Push the branch: `git push -u origin <branch>`
-2. Check if PR #2 is open on `bearappth/bearappth.github.io`
-3. If open → it auto-updates (no action needed, just confirm it's current)
-4. If closed or missing → create a new PR targeting `main` using the GitHub MCP tool
+2. Create a PR targeting `main` (or reuse the existing open one)
+3. **Immediately merge the PR into `main`** using squash merge
+4. GitHub Pages will then deploy automatically from `main`
 
 ## Stack
 Plain HTML + CSS + vanilla JS — no frameworks, no build step.  
-GitHub Pages deploys `main` automatically.
+GitHub Pages deploys `main` automatically after every merge.
 
 ## Code style
 - Mobile-first CSS, fluid values via `clamp()` throughout
