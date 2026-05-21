@@ -43,73 +43,111 @@ const CHECK_META = {
 
 const STATUS_ICON = { pass: '✅', warn: '⚠️', fail: '❌' };
 
-const STORAGE_KEY = 'scamshield_blocklist';
-
 /* ═══════════════════════════════════════════════
-   BLOCKLIST — STORAGE
+   INDEXEDDB — STORAGE (shared with Service Worker)
    ═══════════════════════════════════════════════ */
 
-function loadBlocklist() {
-  try {
-    return JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]');
-  } catch {
-    return [];
-  }
+const DB_NAME    = 'scamshield-db';
+const DB_VERSION = 1;
+const DB_STORE   = 'blocklist';
+
+function openDB() {
+  return new Promise((resolve, reject) => {
+    const req = indexedDB.open(DB_NAME, DB_VERSION);
+    req.onupgradeneeded = e => {
+      const db = e.target.result;
+      if (!db.objectStoreNames.contains(DB_STORE)) {
+        db.createObjectStore(DB_STORE, { keyPath: 'domain' });
+      }
+    };
+    req.onsuccess = e => resolve(e.target.result);
+    req.onerror   = e => reject(e.target.error);
+  });
 }
 
-function saveBlocklist(list) {
-  localStorage.setItem(STORAGE_KEY, JSON.stringify(list));
+async function dbGetAll() {
+  const db = await openDB();
+  return new Promise((resolve, reject) => {
+    const req = db.transaction(DB_STORE, 'readonly').objectStore(DB_STORE).getAll();
+    req.onsuccess = () => resolve(req.result || []);
+    req.onerror   = e => reject(e.target.error);
+  });
 }
 
-function getBlockEntry(hostname, ip) {
-  const list = loadBlocklist();
-  return list.find(e => e.domain === hostname || e.ip === ip) || null;
+async function dbPut(entry) {
+  const db = await openDB();
+  return new Promise((resolve, reject) => {
+    const req = db.transaction(DB_STORE, 'readwrite').objectStore(DB_STORE).put(entry);
+    req.onsuccess = () => resolve();
+    req.onerror   = e => reject(e.target.error);
+  });
 }
 
-function blockSite(result) {
-  const list = loadBlocklist();
-  if (list.some(e => e.domain === result.hostname)) return;
-  list.unshift({
+async function dbDelete(domain) {
+  const db = await openDB();
+  return new Promise((resolve, reject) => {
+    const req = db.transaction(DB_STORE, 'readwrite').objectStore(DB_STORE).delete(domain);
+    req.onsuccess = () => resolve();
+    req.onerror   = e => reject(e.target.error);
+  });
+}
+
+async function dbClear() {
+  const db = await openDB();
+  return new Promise((resolve, reject) => {
+    const req = db.transaction(DB_STORE, 'readwrite').objectStore(DB_STORE).clear();
+    req.onsuccess = () => resolve();
+    req.onerror   = e => reject(e.target.error);
+  });
+}
+
+/* ═══════════════════════════════════════════════
+   BLOCKLIST — CRUD
+   ═══════════════════════════════════════════════ */
+
+async function getBlockEntry(hostname, ip) {
+  const list = await dbGetAll();
+  return list.find(e => e.domain === hostname || (ip && e.ip === ip)) || null;
+}
+
+async function blockSite(result) {
+  const existing = await getBlockEntry(result.hostname, result.whois.ip);
+  if (existing) return;
+  await dbPut({
     domain:    result.hostname,
     ip:        result.whois.ip,
     blockedAt: new Date().toISOString(),
     riskLevel: result.level,
     riskScore: result.score,
   });
-  saveBlocklist(list);
-  renderBlocklistSection();
-  updateBlockSiteBtn(result);
+  await renderBlocklistSection();
 }
 
-function unblockSite(domain) {
-  const list = loadBlocklist().filter(e => e.domain !== domain);
-  saveBlocklist(list);
-  renderBlocklistSection();
+async function unblockSite(domain) {
+  await dbDelete(domain);
+  await renderBlocklistSection();
 }
 
-function clearAllBlocks() {
-  saveBlocklist([]);
-  renderBlocklistSection();
+async function clearAllBlocks() {
+  await dbClear();
+  await renderBlocklistSection();
 }
 
 /* ═══════════════════════════════════════════════
    BLOCKLIST — RENDER
    ═══════════════════════════════════════════════ */
 
-function renderBlocklistSection() {
-  const list   = loadBlocklist();
-  const sec    = $('blocklistSection');
-  const table  = $('blocklistTable');
+async function renderBlocklistSection() {
+  const list  = await dbGetAll();
+  const sec   = $('blocklistSection');
+  const table = $('blocklistTable');
 
-  if (list.length === 0) {
-    sec.hidden = true;
-    return;
-  }
+  if (list.length === 0) { sec.hidden = true; return; }
   sec.hidden = false;
 
   table.innerHTML = list.map(e => {
-    const when  = new Date(e.blockedAt);
-    const dateStr = when.toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: '2-digit' });
+    const when     = new Date(e.blockedAt);
+    const dateStr  = when.toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: '2-digit' });
     const lvlClass = e.riskLevel === 'danger' ? 'tag-danger' : e.riskLevel === 'warn' ? 'tag-warn' : 'tag-safe';
     return `
       <div class="blocklist-entry">
@@ -122,7 +160,7 @@ function renderBlocklistSection() {
             <span class="blocklist-date">Blocked ${dateStr}</span>
           </span>
         </div>
-        <button class="btn btn-ghost btn-sm" onclick="unblockSite('${escHtml(e.domain)}')">
+        <button class="btn btn-ghost btn-sm" onclick="unblockSiteUI('${escHtml(e.domain)}', event)">
           <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 019.9-1"/></svg>
           Unblock
         </button>
@@ -131,25 +169,27 @@ function renderBlocklistSection() {
   }).join('');
 }
 
-/* ─── Blocked panel (shown when user navigates to a blocked URL) ─── */
+async function unblockSiteUI(domain, e) {
+  if (e) e.preventDefault();
+  await unblockSite(domain);
+  if (currentResult) updateBlockSiteBtn(currentResult);
+}
+
+/* ─── Blocked panel ─── */
 
 function renderBlockedPanel(entry, byIP) {
-  const when = new Date(entry.blockedAt);
+  const when    = new Date(entry.blockedAt);
   const dateStr = when.toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: '2-digit' });
   const timeStr = when.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' });
 
-  $('blockedTitle').textContent = byIP
-    ? 'Access Blocked — IP Association'
-    : 'Access Blocked';
-
-  $('blockedDesc').textContent = byIP
+  $('blockedTitle').textContent = byIP ? 'Access Blocked — IP Association' : 'Access Blocked';
+  $('blockedDesc').textContent  = byIP
     ? 'This domain shares an IP address with a site you have blocked. Access is restricted.'
     : 'This website has been blocked by ScamShield and cannot be accessed.';
 
+  const raw = $('urlInput').value.trim();
   const currentHostname = new URL(
-    /^https?:\/\//i.test($('urlInput').value.trim())
-      ? $('urlInput').value.trim()
-      : 'https://' + $('urlInput').value.trim()
+    /^https?:\/\//i.test(raw) ? raw : 'https://' + raw
   ).hostname.replace(/^www\./, '');
 
   $('blockedInfoCard').innerHTML = `
@@ -179,8 +219,8 @@ function renderBlockedPanel(entry, byIP) {
     </div>
   `;
 
-  $('unblockFromPanelBtn').onclick = () => {
-    unblockSite(entry.domain);
+  $('unblockFromPanelBtn').onclick = async () => {
+    await unblockSite(entry.domain);
     $('blockedPanel').hidden = true;
     runCheck();
   };
@@ -188,29 +228,29 @@ function renderBlockedPanel(entry, byIP) {
 
 /* ─── Block button in results panel ─── */
 
-function updateBlockSiteBtn(result) {
+async function updateBlockSiteBtn(result) {
   const btn   = $('blockSiteBtn');
   btn.hidden  = false;
-  const entry = getBlockEntry(result.hostname, result.whois.ip);
+  const entry = await getBlockEntry(result.hostname, result.whois.ip);
 
   if (entry) {
-    btn.className   = 'btn btn-outline-danger';
-    btn.innerHTML   = `
+    btn.className = 'btn btn-outline-danger';
+    btn.innerHTML = `
       <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 019.9-1"/></svg>
       Unblock Site
     `;
-    btn.onclick = () => {
-      unblockSite(entry.domain);
+    btn.onclick = async () => {
+      await unblockSite(entry.domain);
       updateBlockSiteBtn(result);
     };
   } else {
-    btn.className   = 'btn btn-danger';
-    btn.innerHTML   = `
+    btn.className = 'btn btn-danger';
+    btn.innerHTML = `
       <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
       Block This Site
     `;
-    btn.onclick = () => {
-      blockSite(result);
+    btn.onclick = async () => {
+      await blockSite(result);
       updateBlockSiteBtn(result);
     };
   }
@@ -260,7 +300,7 @@ function simulateWhois(hostname, score, seed, monthsOld) {
     'Open Source Initiative', 'Cloud Infrastructure Holdings',
   ];
 
-  const tld = '.' + hostname.split('.').pop();
+  const tld       = '.' + hostname.split('.').pop();
   const registrar = FREENOM_TLDS.has(tld)
     ? 'Freenom'
     : score < 50
@@ -271,7 +311,7 @@ function simulateWhois(hostname, score, seed, monthsOld) {
     ? REGISTRANTS_REAL[seed % REGISTRANTS_REAL.length]
     : REGISTRANTS_PRIVACY[seed % REGISTRANTS_PRIVACY.length];
 
-  const now = new Date();
+  const now        = new Date();
   const registered = new Date(now);
   registered.setMonth(registered.getMonth() - monthsOld);
 
@@ -283,15 +323,15 @@ function simulateWhois(hostname, score, seed, monthsOld) {
   const DEDIC_RANGES  = [[52, 1 + (seed % 200)], [54, 1 + (seed % 200)], [3, 1 + (seed % 200)], [35, 1 + (seed % 200)]];
   const isShared = score < 75 || (seed % 3 !== 0);
   const [r1, r2] = (isShared ? SHARED_RANGES : DEDIC_RANGES)[seed % 4];
-  const ip = `${r1}.${r2}.${(seed >> 8) % 256 || 1}.${seed % 256 || 2}`;
+  const ip       = `${r1}.${r2}.${(seed >> 8) % 256 || 1}.${seed % 256 || 2}`;
 
   const ipType = isShared ? 'shared' : 'dedicated';
   const ipNote = isShared
     ? 'Multiple websites share this IP (shared hosting environment)'
     : 'This IP is used exclusively by this domain (dedicated server)';
 
-  const y = Math.floor(monthsOld / 12);
-  const m = monthsOld % 12;
+  const y        = Math.floor(monthsOld / 12);
+  const m        = monthsOld % 12;
   const ageLabel = monthsOld < 12
     ? `${monthsOld} month${monthsOld === 1 ? '' : 's'}`
     : `${y} year${y > 1 ? 's' : ''}${m > 0 ? ` ${m} mo` : ''}`;
@@ -420,7 +460,7 @@ async function runCheck() {
 
   /* ── Check blocklist before scanning ── */
   if (!skipBlockCheck) {
-    const entry = getBlockEntry(result.hostname, result.whois.ip);
+    const entry = await getBlockEntry(result.hostname, result.whois.ip);
     if (entry) {
       const byIP = entry.domain !== result.hostname;
       $('blockedPanel').hidden  = false;
@@ -598,6 +638,17 @@ function renderResults(r) {
     </div>
   `;
 
+  /* Update the "Visit Site" link with the analyzed URL */
+  const visitBtn = $('visitSiteBtn');
+  if (visitBtn) {
+    const href = /^https?:\/\//i.test($('urlInput').value.trim())
+      ? $('urlInput').value.trim()
+      : 'https://' + $('urlInput').value.trim();
+    visitBtn.href = href;
+    visitBtn.hidden = false;
+  }
+
+  /* Async: update block/unblock button state */
   updateBlockSiteBtn(r);
 }
 
@@ -636,6 +687,8 @@ $('urlInput').addEventListener('keydown', e => { if (e.key === 'Enter') runCheck
 $('checkAnotherBtn').addEventListener('click', () => {
   $('resultsPanel').hidden = true;
   $('blockedPanel').hidden = true;
+  const visitBtn = $('visitSiteBtn');
+  if (visitBtn) visitBtn.hidden = true;
   $('checkerCard').scrollIntoView({ behavior: 'smooth', block: 'start' });
   setTimeout(() => { $('urlInput').value = ''; $('urlInput').focus(); }, 400);
 });
@@ -646,12 +699,44 @@ $('analyzeAnywayBtn').addEventListener('click', () => {
   runCheck();
 });
 
-$('clearAllBlocksBtn').addEventListener('click', () => {
+$('clearAllBlocksBtn').addEventListener('click', async () => {
   if (confirm('Remove all blocked sites? This cannot be undone.')) {
-    clearAllBlocks();
+    await clearAllBlocks();
     if (currentResult) updateBlockSiteBtn(currentResult);
   }
 });
 
-/* ── Init: show blocklist if it has entries ── */
+/* ═══════════════════════════════════════════════
+   SERVICE WORKER REGISTRATION
+   ═══════════════════════════════════════════════ */
+
+function updateSwStatus(state, msg) {
+  const el = $('swStatus');
+  if (!el) return;
+  el.hidden    = false;
+  el.className = `sw-status sw-status--${state}`;
+  el.innerHTML = `
+    <span class="sw-status-dot"></span>
+    <span>${escHtml(msg)}</span>
+  `;
+}
+
+if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.register('sw.js', { scope: '/' })
+    .then(reg => {
+      updateSwStatus('active', 'Real-time blocking active — navigations to blocked sites are intercepted');
+      reg.addEventListener('updatefound', () => {
+        reg.installing && reg.installing.addEventListener('statechange', e => {
+          if (e.target.state === 'activated') updateSwStatus('active', 'Real-time blocking active');
+        });
+      });
+    })
+    .catch(() => {
+      updateSwStatus('error', 'Service Worker unavailable — blocking works within this tab only');
+    });
+} else {
+  updateSwStatus('error', 'Service Workers not supported — blocking works within this tab only');
+}
+
+/* ── Init ── */
 renderBlocklistSection();
