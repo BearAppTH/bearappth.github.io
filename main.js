@@ -32,14 +32,22 @@ const sectionObserver = new IntersectionObserver(entries => {
   entries.forEach(entry => {
     if (!entry.isIntersecting) return;
     const id = entry.target.id;
-    navAnchors.forEach(a => a.classList.toggle('active', a.getAttribute('href') === `#${id}`));
+    navAnchors.forEach(a => {
+      const match = a.getAttribute('href') === `#${id}`;
+      a.classList.toggle('active', match);
+    });
   });
 }, { rootMargin: '-40% 0px -55% 0px' });
 
 sections.forEach(s => sectionObserver.observe(s));
 
 /* ── Typing effect ── */
-const phrases = ['Full-Stack Developer', 'Frontend Craftsman', 'Backend Engineer', 'Open Source Contributor'];
+const phrases = [
+  'Full-Stack Developer',
+  'Frontend Craftsman',
+  'Backend Engineer',
+  'Open Source Contributor',
+];
 let pi = 0, ci = 0, deleting = false;
 const typedEl = document.getElementById('typed');
 
