@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <title>ScamShield — Website Scam &amp; Spam Checker | BearAppTH</title>
+  <meta name="description" content="Free tool to instantly check if a website is a scam, phishing site, or spam. Analyze any URL for threats." />
+  <meta name="theme-color" content="#0d1117" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <meta property="og:title" content="ScamShield — Website Scam &amp; Spam Checker" />
+  <meta property="og:description" content="Instantly analyze any URL for phishing, scam patterns, and spam indicators." />
+  <meta property="og:type" content="website" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="scam-checker.css" />
+</head>
+<body>
+
+  <!-- ── NAVBAR ── -->
+  <nav id="navbar">
+    <div class="nav-inner">
+      <a href="index.html" class="nav-logo">&lt;BearAppTH /&gt;</a>
+      <ul class="nav-links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="index.html#projects">Projects</a></li>
+        <li><a href="index.html#contact">Contact</a></li>
+      </ul>
+      <button class="hamburger" id="hamburger"
+              aria-label="Toggle navigation" aria-expanded="false"
+              aria-controls="nav-drawer">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </nav>
+
+  <div class="nav-drawer" id="nav-drawer" role="navigation" aria-label="Mobile navigation">
+    <ul>
+      <li><a href="index.html"          class="drawer-link">Home</a></li>
+      <li><a href="index.html#projects" class="drawer-link">Projects</a></li>
+      <li><a href="index.html#contact"  class="drawer-link">Contact</a></li>
+    </ul>
+  </div>
+
+  <!-- ── TOOL HERO ── -->
+  <section class="tool-hero">
+    <div class="hero-bg"><div class="grid-overlay"></div></div>
+    <div class="container">
+      <div class="tool-hero-content">
+        <div class="tool-badge">
+          <span class="tool-badge-dot"></span>
+          Free Tool &nbsp;·&nbsp; No Registration Required
+        </div>
+        <h1 class="tool-title">
+          <span class="accent">ScamShield</span><br />
+          Website Scam Checker
+        </h1>
+        <p class="tool-subtitle">
+          Instantly analyze any URL for phishing attempts, scam patterns,
+          and spam indicators — protect yourself before you click.
+        </p>
+        <div class="tool-stats">
+          <div class="tool-stat">
+            <span class="tool-stat-num">6+</span>
+            <span class="tool-stat-label">Checks</span>
+          </div>
+          <div class="tool-stat">
+            <span class="tool-stat-num">&lt;2s</span>
+            <span class="tool-stat-label">Analysis</span>
+          </div>
+          <div class="tool-stat">
+            <span class="tool-stat-num">Free</span>
+            <span class="tool-stat-label">Always</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── CHECKER TOOL ── -->
+  <section class="tool-section">
+    <div class="container">
+
+      <!-- Input Card -->
+      <div class="checker-card card reveal" id="checkerCard">
+        <div class="checker-input-row">
+          <div class="url-input-wrapper">
+            <svg class="url-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M10 13a5 5 0 007.54.54l3-3a5 5 0 00-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 00-7.54-.54l-3 3a5 5 0 007.07 7.07l1.71-1.71"/></svg>
+            <input
+              type="url"
+              id="urlInput"
+              class="url-input"
+              placeholder="https://example.com"
+              autocomplete="off"
+              autocapitalize="none"
+              spellcheck="false"
+            />
+          </div>
+          <button class="btn btn-primary checker-btn" id="checkBtn">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+            Analyze
+          </button>
+        </div>
+        <p class="checker-hint" id="checkerHint">Enter the full URL including https:// — e.g., <span class="accent">https://example.com</span></p>
+      </div>
+
+      <!-- Scanning Panel -->
+      <div class="scanning-panel" id="scanningPanel" hidden>
+        <div class="scan-header">
+          <div class="scan-spinner" aria-hidden="true"></div>
+          <span id="scanningLabel">Initializing scan…</span>
+        </div>
+        <div class="scan-progress-bar" role="progressbar" aria-label="Scan progress">
+          <div class="scan-progress-fill" id="scanProgressFill"></div>
+        </div>
+        <div class="scan-checks-list" id="scanChecksList" aria-live="polite"></div>
+      </div>
+
+      <!-- Results Panel -->
+      <div id="resultsPanel" hidden>
+
+        <!-- Verdict -->
+        <div class="verdict-card" id="verdictCard">
+          <div class="verdict-icon" id="verdictIcon" aria-hidden="true"></div>
+          <div class="verdict-text">
+            <h2 class="verdict-title" id="verdictTitle"></h2>
+            <p class="verdict-desc" id="verdictDesc"></p>
+          </div>
+          <div class="risk-score-wrap">
+            <div class="risk-score-label">Risk Score</div>
+            <div class="risk-score-bar">
+              <div class="risk-score-fill" id="riskScoreFill"></div>
+            </div>
+            <div class="risk-score-num" id="riskScoreNum"></div>
+          </div>
+        </div>
+
+        <!-- Checks Grid -->
+        <div class="checks-grid" id="checksGrid"></div>
+
+        <!-- Domain Meta -->
+        <div class="domain-details card" id="domainDetails"></div>
+
+        <!-- Actions -->
+        <div class="results-actions">
+          <button class="btn btn-outline" id="checkAnotherBtn">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M3 12a9 9 0 019-9 9.75 9.75 0 016.74 2.74L21 8"/><path d="M21 3v5h-5"/><path d="M21 12a9 9 0 01-9 9 9.75 9.75 0 01-6.74-2.74L3 16"/><path d="M8 16H3v5"/></svg>
+            Check Another URL
+          </button>
+          <a href="index.html#contact" class="btn btn-ghost">Report False Result</a>
+        </div>
+
+      </div>
+
+      <!-- How It Works -->
+      <div class="how-it-works reveal" id="howItWorks">
+        <h2 class="section-title"><span class="accent">#</span> How It Works</h2>
+        <div class="steps-grid">
+          <div class="step-card card reveal">
+            <div class="step-num">01</div>
+            <h3>Enter URL</h3>
+            <p>Paste any suspicious link or website address into the input field above.</p>
+          </div>
+          <div class="step-card card reveal">
+            <div class="step-num">02</div>
+            <h3>Deep Analysis</h3>
+            <p>Our engine runs multiple checks — HTTPS, TLD reputation, domain structure, keyword scanning, and threat databases.</p>
+          </div>
+          <div class="step-card card reveal">
+            <div class="step-num">03</div>
+            <h3>Instant Verdict</h3>
+            <p>Get a clear result with a detailed breakdown of every check and a risk score from 0–100.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Disclaimer -->
+      <p class="tool-disclaimer reveal">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+        Demo tool — results are pattern-based and not a substitute for professional security software.
+      </p>
+
+    </div>
+  </section>
+
+  <!-- ── FOOTER ── -->
+  <footer class="footer">
+    <div class="container">
+      <p>
+        <span class="accent">ScamShield</span> · Built by
+        <a href="index.html">BearAppTH</a>
+        &nbsp;·&nbsp;
+        <a href="index.html#projects">More Projects</a>
+      </p>
+      <p class="footer-sub">Made with ❤️ and lots of ☕</p>
+    </div>
+  </footer>
+
+  <button class="back-to-top" id="backToTop" aria-label="Back to top">
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><polyline points="18 15 12 9 6 15"/></svg>
+  </button>
+
+  <script src="main.js"></script>
+  <script src="scam-checker.js"></script>
+</body>
+</html>
