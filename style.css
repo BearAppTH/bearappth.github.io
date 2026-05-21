@@ -692,6 +692,19 @@ a.contact-value:hover { color: var(--accent); }
   }
   .hamburger { display: flex; }
 
+  /* Fix: align-items center clips content above viewport on short screens */
+  .hero {
+    align-items: flex-start;
+  }
+  .hero-content {
+    padding-top: calc(var(--nav-height) + 20px);
+    padding-bottom: 56px;
+  }
+  .hero-greeting { margin-bottom: 10px; }
+  .hero-name    { margin-bottom: 10px; }
+  .hero-role    { margin-bottom: 14px; }
+  .hero-desc    { margin-bottom: 24px; }
+
   .about-grid {
     grid-template-columns: 1fr;
     gap: 32px;
@@ -709,6 +722,10 @@ a.contact-value:hover { color: var(--accent); }
 
 /* ===== Small Mobile (≤480px) ===== */
 @media (max-width: 480px) {
+  .hero-content {
+    padding-top: calc(var(--nav-height) + 16px);
+    padding-bottom: 48px;
+  }
   .hero-actions { flex-direction: column; }
   .hero-actions .btn { width: 100%; }
   .about-facts { gap: 20px; }
@@ -720,4 +737,5 @@ a.contact-value:hover { color: var(--accent); }
 @media (max-width: 360px) {
   .nav-logo { font-size: 0.85rem; }
   .fact-number { font-size: 1.3rem; }
+  .hero-desc { font-size: 0.9rem; }
 }
