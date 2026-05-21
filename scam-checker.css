@@ -288,7 +288,7 @@
 }
 
 /* ============================================================
-   CHECKS GRID
+   CHECKS GRID  (2 col → 3 col; last item spans full width)
    ============================================================ */
 .checks-grid {
   display: grid;
@@ -296,7 +296,10 @@
   gap: clamp(8px, 1.5vw, 12px);
   margin-bottom: clamp(10px, 1.5vw, 16px);
 }
-@media (min-width: 768px) { .checks-grid { grid-template-columns: repeat(3, 1fr); } }
+@media (min-width: 768px) {
+  .checks-grid { grid-template-columns: repeat(3, 1fr); }
+  .check-item-summary { grid-column: 1 / -1; }
+}
 @media (max-width: 420px) { .checks-grid { grid-template-columns: 1fr; } }
 
 .check-item {
@@ -320,29 +323,68 @@
 .check-detail      { font-size: var(--t-xs); color: var(--muted); font-family: var(--mono); line-height: 1.5; }
 
 /* ============================================================
-   DOMAIN META
+   DOMAIN DETAILS CARD — three labelled groups
    ============================================================ */
 .domain-details {
   margin-bottom: clamp(10px, 1.5vw, 16px);
   animation: fadeUp .35s .1s ease both;
 }
 
-.domain-details-title {
+.detail-group + .detail-group {
+  margin-top: 20px;
+  padding-top: 20px;
+  border-top: 1px solid var(--border);
+}
+
+.detail-group-title {
+  display: flex;
+  align-items: center;
+  gap: 6px;
   font-family: var(--mono);
   font-size: var(--t-xs);
   color: var(--muted);
   margin-bottom: 14px;
+  text-transform: uppercase;
+  letter-spacing: .05em;
 }
 
 .domain-meta-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
   gap: clamp(10px, 2vw, 16px);
 }
 
 .domain-meta-item   { display: flex; flex-direction: column; gap: 3px; }
 .domain-meta-key    { font-size: var(--t-xs); color: var(--muted); font-family: var(--mono); }
 .domain-meta-val    { font-size: var(--t-sm); color: var(--text);  font-family: var(--mono); word-break: break-all; }
+.domain-meta-sub    { font-size: var(--t-xs); color: var(--muted); font-family: var(--mono); line-height: 1.45; margin-top: 2px; }
+
+/* ip_type item wider on narrow screens */
+.domain-meta-item--wide { grid-column: span 2; }
+@media (min-width: 640px) { .domain-meta-item--wide { grid-column: span 1; } }
+
+/* ── IP type badge ── */
+.ip-type-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 3px 10px;
+  border-radius: 99px;
+  font-size: var(--t-xs);
+  font-family: var(--mono);
+  white-space: nowrap;
+  font-weight: 600;
+}
+.ip-type-badge.shared    {
+  background: rgba(210,153,34,.12);
+  color: #e3b341;
+  border: 1px solid rgba(210,153,34,.3);
+}
+.ip-type-badge.dedicated {
+  background: rgba(63,185,80,.12);
+  color: #56d364;
+  border: 1px solid rgba(63,185,80,.3);
+}
 
 /* ============================================================
    RESULTS ACTIONS
