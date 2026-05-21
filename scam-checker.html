@@ -63,7 +63,7 @@
         </p>
         <div class="tool-stats">
           <div class="tool-stat">
-            <span class="tool-stat-num">6+</span>
+            <span class="tool-stat-num">7+</span>
             <span class="tool-stat-label">Checks</span>
           </div>
           <div class="tool-stat">
@@ -118,6 +118,28 @@
         <div class="scan-checks-list" id="scanChecksList" aria-live="polite"></div>
       </div>
 
+      <!-- Blocked Panel -->
+      <div class="blocked-panel" id="blockedPanel" hidden>
+        <div class="blocked-shield" aria-hidden="true">
+          <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+        </div>
+        <div class="blocked-body">
+          <h2 class="blocked-title" id="blockedTitle">Access Blocked</h2>
+          <p class="blocked-desc" id="blockedDesc">This website has been blocked by ScamShield.</p>
+          <div class="blocked-info-card" id="blockedInfoCard"></div>
+          <div class="blocked-actions">
+            <button class="btn btn-outline-danger" id="unblockFromPanelBtn">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 019.9-1"/></svg>
+              Unblock Site
+            </button>
+            <button class="btn btn-ghost" id="analyzeAnywayBtn">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+              Analyze Anyway
+            </button>
+          </div>
+        </div>
+      </div>
+
       <!-- Results Panel -->
       <div id="resultsPanel" hidden>
 
@@ -149,9 +171,28 @@
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M3 12a9 9 0 019-9 9.75 9.75 0 016.74 2.74L21 8"/><path d="M21 3v5h-5"/><path d="M21 12a9 9 0 01-9 9 9.75 9.75 0 01-6.74-2.74L3 16"/><path d="M8 16H3v5"/></svg>
             Check Another URL
           </button>
+          <button class="btn btn-danger" id="blockSiteBtn" hidden>
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+            Block This Site
+          </button>
           <a href="index.html#contact" class="btn btn-ghost">Report False Result</a>
         </div>
 
+      </div>
+
+      <!-- Blocklist Manager -->
+      <div class="blocklist-section reveal" id="blocklistSection" hidden>
+        <div class="blocklist-section-header">
+          <div>
+            <h2 class="section-title"><span class="accent">#</span> Blocked Sites</h2>
+            <p class="blocklist-subtitle">Domains and IPs blocked on this device — stored locally in your browser.</p>
+          </div>
+          <button class="btn btn-ghost" id="clearAllBlocksBtn">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 01-2 2H8a2 2 0 01-2-2L5 6"/><path d="M10 11v6"/><path d="M14 11v6"/></svg>
+            Clear All
+          </button>
+        </div>
+        <div id="blocklistTable"></div>
       </div>
 
       <!-- How It Works -->
