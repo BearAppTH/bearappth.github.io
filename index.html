@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>BearAppTH — Full-Stack Developer</title>
+  <meta name="description" content="BearAppTH — Full-Stack Developer. Building modern web applications with passion." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav id="navbar">
+    <div class="nav-inner">
+      <a href="#home" class="nav-logo">&lt;BearAppTH /&gt;</a>
+      <ul class="nav-links">
+        <li><a href="#about">About</a></li>
+        <li><a href="#skills">Skills</a></li>
+        <li><a href="#projects">Projects</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+      <button class="hamburger" id="hamburger" aria-label="Toggle menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <section id="home" class="hero">
+    <div class="hero-bg">
+      <div class="grid-overlay"></div>
+    </div>
+    <div class="hero-content">
+      <p class="hero-greeting">Hello, World! 👋</p>
+      <h1 class="hero-name">I'm <span class="accent">BearAppTH</span></h1>
+      <h2 class="hero-role">
+        <span class="typed-text" id="typed"></span><span class="cursor">|</span>
+      </h2>
+      <p class="hero-desc">
+        Building modern, scalable web applications with clean code and great user experiences.
+      </p>
+      <div class="hero-actions">
+        <a href="#projects" class="btn btn-primary">View My Work</a>
+        <a href="#contact" class="btn btn-outline">Get In Touch</a>
+      </div>
+      <div class="hero-scroll">
+        <span>Scroll down</span>
+        <div class="scroll-arrow"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ABOUT -->
+  <section id="about" class="section about">
+    <div class="container">
+      <h2 class="section-title"><span class="accent">#</span> About Me</h2>
+      <div class="about-grid">
+        <div class="about-avatar">
+          <div class="avatar-ring">
+            <div class="avatar-inner">
+              <span class="avatar-icon">🐻</span>
+            </div>
+          </div>
+          <div class="status-badge">
+            <span class="status-dot"></span>
+            Available for work
+          </div>
+        </div>
+        <div class="about-text">
+          <p>
+            I'm a passionate <strong>Full-Stack Developer</strong> who loves crafting
+            beautiful and performant web applications. I enjoy turning complex problems
+            into simple, elegant solutions.
+          </p>
+          <p>
+            When I'm not coding, you can find me exploring new technologies, contributing
+            to open-source projects, or sharing knowledge with the developer community.
+          </p>
+          <div class="about-facts">
+            <div class="fact">
+              <span class="fact-number">2+</span>
+              <span class="fact-label">Years Experience</span>
+            </div>
+            <div class="fact">
+              <span class="fact-number">10+</span>
+              <span class="fact-label">Projects Built</span>
+            </div>
+            <div class="fact">
+              <span class="fact-number">100%</span>
+              <span class="fact-label">Passion for Code</span>
+            </div>
+          </div>
+          <a href="#contact" class="btn btn-primary">Let's Work Together</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SKILLS -->
+  <section id="skills" class="section skills">
+    <div class="container">
+      <h2 class="section-title"><span class="accent">#</span> Skills & Tech Stack</h2>
+      <div class="skills-grid">
+
+        <div class="skill-card">
+          <div class="skill-card-header">
+            <span class="skill-icon">🎨</span>
+            <h3>Frontend</h3>
+          </div>
+          <div class="tags">
+            <span class="tag">HTML5</span>
+            <span class="tag">CSS3</span>
+            <span class="tag">JavaScript</span>
+            <span class="tag">React</span>
+            <span class="tag">TypeScript</span>
+            <span class="tag">Tailwind CSS</span>
+          </div>
+        </div>
+
+        <div class="skill-card">
+          <div class="skill-card-header">
+            <span class="skill-icon">⚙️</span>
+            <h3>Backend</h3>
+          </div>
+          <div class="tags">
+            <span class="tag">Node.js</span>
+            <span class="tag">Express</span>
+            <span class="tag">Python</span>
+            <span class="tag">REST API</span>
+            <span class="tag">GraphQL</span>
+          </div>
+        </div>
+
+        <div class="skill-card">
+          <div class="skill-card-header">
+            <span class="skill-icon">🗄️</span>
+            <h3>Database</h3>
+          </div>
+          <div class="tags">
+            <span class="tag">PostgreSQL</span>
+            <span class="tag">MongoDB</span>
+            <span class="tag">MySQL</span>
+            <span class="tag">Redis</span>
+          </div>
+        </div>
+
+        <div class="skill-card">
+          <div class="skill-card-header">
+            <span class="skill-icon">🚀</span>
+            <h3>DevOps & Tools</h3>
+          </div>
+          <div class="tags">
+            <span class="tag">Git</span>
+            <span class="tag">Docker</span>
+            <span class="tag">GitHub Actions</span>
+            <span class="tag">Linux</span>
+            <span class="tag">Vercel</span>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- PROJECTS -->
+  <section id="projects" class="section projects">
+    <div class="container">
+      <h2 class="section-title"><span class="accent">#</span> Projects</h2>
+      <div class="projects-grid">
+
+        <article class="project-card">
+          <div class="project-header">
+            <span class="project-icon">📁</span>
+            <div class="project-links">
+              <a href="#" class="icon-link" title="GitHub">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.374 0 0 5.373 0 12c0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23A11.509 11.509 0 0112 5.803c1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576C20.566 21.797 24 17.3 24 12c0-6.627-5.373-12-12-12z"/></svg>
+              </a>
+              <a href="#" class="icon-link" title="Live Demo">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+              </a>
+            </div>
+          </div>
+          <h3 class="project-title">Project Alpha</h3>
+          <p class="project-desc">
+            A full-stack web application with real-time features, authentication,
+            and a clean responsive UI.
+          </p>
+          <div class="tags">
+            <span class="tag tag-sm">React</span>
+            <span class="tag tag-sm">Node.js</span>
+            <span class="tag tag-sm">PostgreSQL</span>
+          </div>
+        </article>
+
+        <article class="project-card">
+          <div class="project-header">
+            <span class="project-icon">📁</span>
+            <div class="project-links">
+              <a href="#" class="icon-link" title="GitHub">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.374 0 0 5.373 0 12c0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23A11.509 11.509 0 0112 5.803c1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576C20.566 21.797 24 17.3 24 12c0-6.627-5.373-12-12-12z"/></svg>
+              </a>
+              <a href="#" class="icon-link" title="Live Demo">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+              </a>
+            </div>
+          </div>
+          <h3 class="project-title">API Gateway</h3>
+          <p class="project-desc">
+            A robust REST API service with rate limiting, caching, and comprehensive
+            documentation for seamless integrations.
+          </p>
+          <div class="tags">
+            <span class="tag tag-sm">Python</span>
+            <span class="tag tag-sm">FastAPI</span>
+            <span class="tag tag-sm">Redis</span>
+          </div>
+        </article>
+
+        <article class="project-card">
+          <div class="project-header">
+            <span class="project-icon">📁</span>
+            <div class="project-links">
+              <a href="#" class="icon-link" title="GitHub">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.374 0 0 5.373 0 12c0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23A11.509 11.509 0 0112 5.803c1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576C20.566 21.797 24 17.3 24 12c0-6.627-5.373-12-12-12z"/></svg>
+              </a>
+              <a href="#" class="icon-link" title="Live Demo">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+              </a>
+            </div>
+          </div>
+          <h3 class="project-title">DevTool CLI</h3>
+          <p class="project-desc">
+            A command-line tool that automates repetitive development tasks,
+            boosting productivity for the whole team.
+          </p>
+          <div class="tags">
+            <span class="tag tag-sm">TypeScript</span>
+            <span class="tag tag-sm">Node.js</span>
+            <span class="tag tag-sm">Docker</span>
+          </div>
+        </article>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section id="contact" class="section contact">
+    <div class="container contact-inner">
+      <h2 class="section-title"><span class="accent">#</span> Get In Touch</h2>
+      <p class="contact-sub">
+        Have a project in mind or just want to say hi? My inbox is always open.
+      </p>
+      <div class="contact-grid">
+        <div class="contact-info">
+          <div class="contact-item">
+            <span class="contact-icon">📧</span>
+            <div>
+              <span class="contact-label">Email</span>
+              <a href="mailto:boss.borwornwong@gmail.com" class="contact-value">boss.borwornwong@gmail.com</a>
+            </div>
+          </div>
+          <div class="contact-item">
+            <span class="contact-icon">💻</span>
+            <div>
+              <span class="contact-label">GitHub</span>
+              <a href="https://github.com/bearappth" target="_blank" rel="noopener" class="contact-value">github.com/bearappth</a>
+            </div>
+          </div>
+          <div class="contact-item">
+            <span class="contact-icon">📍</span>
+            <div>
+              <span class="contact-label">Location</span>
+              <span class="contact-value">Thailand 🇹🇭</span>
+            </div>
+          </div>
+        </div>
+        <form class="contact-form" id="contactForm">
+          <div class="form-group">
+            <label for="name">Name</label>
+            <input type="text" id="name" name="name" placeholder="Your Name" required />
+          </div>
+          <div class="form-group">
+            <label for="email">Email</label>
+            <input type="email" id="email" name="email" placeholder="your@email.com" required />
+          </div>
+          <div class="form-group">
+            <label for="message">Message</label>
+            <textarea id="message" name="message" rows="4" placeholder="Hello! I'd like to..." required></textarea>
+          </div>
+          <button type="submit" class="btn btn-primary btn-full">Send Message 🚀</button>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="container">
+      <p>
+        Designed &amp; Built by <span class="accent">BearAppTH</span> &nbsp;·&nbsp;
+        <a href="https://github.com/bearappth" target="_blank" rel="noopener">GitHub</a>
+      </p>
+      <p class="footer-sub">Made with ❤️ and lots of ☕</p>
+    </div>
+  </footer>
+
+  <script src="main.js"></script>
+</body>
+</html>
