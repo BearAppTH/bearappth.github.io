@@ -1,81 +1,81 @@
-// Navbar scroll effect
+/* ── Navbar scroll border ── */
 const navbar = document.getElementById('navbar');
-window.addEventListener('scroll', () => {
-  navbar.classList.toggle('scrolled', window.scrollY > 40);
-});
+const onScroll = () => navbar.classList.toggle('scrolled', window.scrollY > 40);
+window.addEventListener('scroll', onScroll, { passive: true });
 
-// Mobile hamburger menu
-const hamburger = document.getElementById('hamburger');
-const navLinks = document.querySelector('.nav-links');
+/* ── Mobile nav drawer ── */
+const hamburger  = document.getElementById('hamburger');
+const navDrawer  = document.getElementById('nav-drawer');
+
+function openDrawer() {
+  navDrawer.classList.add('open');
+  hamburger.setAttribute('aria-expanded', 'true');
+  document.body.style.overflow = 'hidden'; // prevent background scroll
+}
+
+function closeDrawer() {
+  navDrawer.classList.remove('open');
+  hamburger.setAttribute('aria-expanded', 'false');
+  document.body.style.overflow = '';
+}
+
 hamburger.addEventListener('click', () => {
-  hamburger.classList.toggle('open');
-  navLinks.classList.toggle('open');
-});
-navLinks.querySelectorAll('a').forEach(link => {
-  link.addEventListener('click', () => {
-    hamburger.classList.remove('open');
-    navLinks.classList.remove('open');
-  });
+  navDrawer.classList.contains('open') ? closeDrawer() : openDrawer();
 });
 
-// Typing effect
+// Close when a link is tapped
+navDrawer.querySelectorAll('.drawer-link').forEach(link => {
+  link.addEventListener('click', closeDrawer);
+});
+
+// Close on Escape key
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape') closeDrawer();
+});
+
+/* ── Typing effect ── */
 const phrases = [
   'Full-Stack Developer',
   'Frontend Craftsman',
   'Backend Engineer',
   'Open Source Contributor',
 ];
-let phraseIndex = 0;
-let charIndex = 0;
-let deleting = false;
+let pi = 0, ci = 0, deleting = false;
 const typedEl = document.getElementById('typed');
 
 function type() {
-  const current = phrases[phraseIndex];
-  if (deleting) {
-    typedEl.textContent = current.slice(0, --charIndex);
-  } else {
-    typedEl.textContent = current.slice(0, ++charIndex);
-  }
+  const word = phrases[pi];
+  typedEl.textContent = deleting ? word.slice(0, --ci) : word.slice(0, ++ci);
 
-  if (!deleting && charIndex === current.length) {
+  if (!deleting && ci === word.length) {
     setTimeout(() => { deleting = true; type(); }, 1800);
     return;
   }
-  if (deleting && charIndex === 0) {
+  if (deleting && ci === 0) {
     deleting = false;
-    phraseIndex = (phraseIndex + 1) % phrases.length;
+    pi = (pi + 1) % phrases.length;
   }
-  setTimeout(type, deleting ? 50 : 90);
+  setTimeout(type, deleting ? 45 : 85);
 }
 type();
 
-// Scroll reveal
-const reveals = document.querySelectorAll('.section > .container, .section > .hero-content');
+/* ── Scroll reveal ── */
 const observer = new IntersectionObserver(
-  entries => entries.forEach(e => e.isIntersecting && e.target.classList.add('visible')),
-  { threshold: 0.1 }
+  entries => entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); }),
+  { threshold: 0.12 }
 );
+document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
 
-document.querySelectorAll('.skill-card, .project-card, .about-grid, .contact-grid, .section-title')
-  .forEach(el => {
-    el.classList.add('reveal');
-    observer.observe(el);
-  });
-
-// Contact form (demo — shows alert since there's no backend)
+/* ── Contact form ── */
 document.getElementById('contactForm').addEventListener('submit', function (e) {
   e.preventDefault();
-  const btn = this.querySelector('button[type="submit"]');
-  const original = btn.textContent;
-  btn.textContent = 'Sending...';
+  const btn = this.querySelector('[type="submit"]');
+  const orig = btn.textContent;
+  btn.textContent = 'Sending…';
   btn.disabled = true;
   setTimeout(() => {
-    btn.textContent = 'Message Sent! ✅';
+    btn.textContent = 'Sent! ✅';
     this.reset();
-    setTimeout(() => {
-      btn.textContent = original;
-      btn.disabled = false;
-    }, 3000);
+    setTimeout(() => { btn.textContent = orig; btn.disabled = false; }, 3000);
   }, 1000);
 });
