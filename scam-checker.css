@@ -644,3 +644,43 @@
   font-family: var(--mono);
   opacity: .7;
 }
+
+/* ============================================================
+   SERVICE WORKER STATUS
+   ============================================================ */
+.sw-status {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 12px;
+  padding: 7px 12px;
+  border-radius: var(--r-sm);
+  font-size: var(--t-xs);
+  font-family: var(--mono);
+  line-height: 1.5;
+  border: 1px solid transparent;
+}
+
+.sw-status--active {
+  background: rgba(63, 185, 80, .08);
+  border-color: rgba(63, 185, 80, .3);
+  color: #3fb950;
+}
+
+.sw-status--error {
+  background: rgba(248, 81, 73, .08);
+  border-color: rgba(248, 81, 73, .25);
+  color: #f85149;
+}
+
+.sw-status-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  flex-shrink: 0;
+  background: currentColor;
+}
+
+.sw-status--active .sw-status-dot {
+  animation: pulse 2s infinite;
+}
