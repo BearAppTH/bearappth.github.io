@@ -5,14 +5,58 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
   <title>BearAppTH · Downloads</title>
   <meta name="description" content="Free and open-source Android apps by BearAppTH. Download the latest releases." />
-  <meta name="theme-color" content="#0d1117" />
+  <meta name="theme-color" content="#3fb950" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+
+  <!-- Favicon -->
   <link rel="icon" type="image/svg+xml" href="favicon.svg" />
   <link rel="apple-touch-icon" href="favicon.svg" />
-  <meta property="og:title" content="BearAppTH · Downloads" />
-  <meta property="og:description" content="Free and open-source Android apps by BearAppTH. Download the latest releases." />
-  <meta property="og:type" content="website" />
+
+  <!-- PWA Manifest -->
+  <link rel="manifest" href="manifest.json" />
+
+  <!-- Open Graph -->
+  <meta property="og:title"       content="BearAppTH · Downloads" />
+  <meta property="og:description" content="Free and open-source Android apps by BearAppTH. Always the latest release." />
+  <meta property="og:type"        content="website" />
+  <meta property="og:url"         content="https://bearappth.github.io" />
+  <meta property="og:image"       content="https://bearappth.github.io/og-image.svg" />
+  <meta property="og:image:width"  content="1200" />
+  <meta property="og:image:height" content="630" />
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card"        content="summary_large_image" />
+  <meta name="twitter:title"       content="BearAppTH · Downloads" />
+  <meta name="twitter:description" content="Free and open-source Android apps by BearAppTH." />
+  <meta name="twitter:image"       content="https://bearappth.github.io/og-image.svg" />
+
+  <!-- JSON-LD Structured Data -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebPage",
+    "name": "BearAppTH · Downloads",
+    "description": "Free and open-source Android apps by BearAppTH",
+    "url": "https://bearappth.github.io",
+    "mainEntity": {
+      "@type": "SoftwareApplication",
+      "name": "Bear MicroG",
+      "operatingSystem": "Android 7.0+",
+      "applicationCategory": "https://schema.org/UtilitiesApplication",
+      "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+      "downloadUrl": "https://github.com/BearAppTH/MicroG-RE/releases/latest",
+      "softwareVersion": "3.0.1",
+      "license": "https://www.apache.org/licenses/LICENSE-2.0",
+      "author": {
+        "@type": "Person",
+        "name": "BearAppTH",
+        "url": "https://github.com/BearAppTH"
+      }
+    }
+  }
+  </script>
+
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
@@ -32,6 +76,15 @@
       </a>
     </div>
   </header>
+
+  <!-- ── FETCH ERROR BANNER ── -->
+  <div class="fetch-banner" id="fetchBanner" role="status" hidden>
+    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+      <circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/>
+    </svg>
+    Showing cached release data — could not reach GitHub API right now.
+    <button class="fetch-banner-close" onclick="this.parentElement.hidden=true" aria-label="Dismiss">✕</button>
+  </div>
 
   <!-- ── HERO ── -->
   <section class="hero">
@@ -82,6 +135,26 @@
           <span class="tag">Material 3</span>
         </div>
 
+        <!-- Download stats row -->
+        <div class="dl-stats">
+          <span class="dl-stat">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+            <span class="js-dl-count">—</span> downloads
+          </span>
+          <span class="dl-stat-sep" aria-hidden="true">·</span>
+          <span class="dl-stat">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+            <span class="js-file-size">—</span>
+          </span>
+          <span class="dl-stat-sep" aria-hidden="true">·</span>
+          <a href="https://github.com/BearAppTH/MicroG-RE/releases/latest"
+             class="dl-stat-verify js-verify-link"
+             target="_blank" rel="noopener noreferrer">
+            Verify on GitHub
+            <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+          </a>
+        </div>
+
         <div class="project-actions">
           <a href="https://github.com/BearAppTH/MicroG-RE/releases/download/v3.0.1/bear-microg-v3.0.1.apk"
              class="btn btn-download js-download-btn"
@@ -91,8 +164,7 @@
               <polyline points="7 10 12 15 17 10"/>
               <line x1="12" y1="15" x2="12" y2="3"/>
             </svg>
-            <span>Download APK</span>
-            <span class="file-size js-file-size"></span>
+            Download APK
           </a>
           <a href="https://github.com/BearAppTH/MicroG-RE"
              class="btn btn-outline"
@@ -129,6 +201,66 @@
         </div>
 
       </article>
+
+      <!-- ── INSTALL GUIDE ── -->
+      <section class="install-guide">
+        <h2 class="install-guide-title">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="5" y="2" width="14" height="20" rx="2" ry="2"/><line x1="12" y1="18" x2="12.01" y2="18"/></svg>
+          How to Install on Android
+        </h2>
+        <ol class="install-steps" role="list">
+          <li class="install-step">
+            <div class="install-step-num" aria-hidden="true">01</div>
+            <div class="install-step-body">
+              <strong>Tap Download APK</strong>
+              <p>The APK file will download to your device's Downloads folder.</p>
+            </div>
+          </li>
+          <li class="install-step">
+            <div class="install-step-num" aria-hidden="true">02</div>
+            <div class="install-step-body">
+              <strong>Open the file</strong>
+              <p>Go to Files / My Files and tap <code>bear-microg-*.apk</code> to begin installation.</p>
+            </div>
+          </li>
+          <li class="install-step">
+            <div class="install-step-num" aria-hidden="true">03</div>
+            <div class="install-step-body">
+              <strong>Allow unknown sources</strong>
+              <p>Android will prompt you — tap <em>Settings</em> and enable "Install unknown apps" for your file manager or browser, then go back and tap Install.</p>
+            </div>
+          </li>
+          <li class="install-step">
+            <div class="install-step-num" aria-hidden="true">04</div>
+            <div class="install-step-body">
+              <strong>Launch Bear MicroG</strong>
+              <p>Tap Open after installation completes. Sign in with your Google account to get started.</p>
+            </div>
+          </li>
+        </ol>
+      </section>
+
+      <!-- ── RELEASE HISTORY ── -->
+      <section class="history-section" id="history-section-microg">
+        <div class="history-section-header">
+          <h2 class="history-section-title">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><polyline points="12 8 12 12 14 14"/><circle cx="12" cy="12" r="10"/></svg>
+            Release History
+          </h2>
+          <a href="https://github.com/BearAppTH/MicroG-RE/releases"
+             class="history-all-link"
+             target="_blank" rel="noopener noreferrer">
+            All releases →
+          </a>
+        </div>
+        <div class="history-list" id="microg-history" aria-live="polite">
+          <div class="history-loading">
+            <div class="history-skeleton"></div>
+            <div class="history-skeleton"></div>
+            <div class="history-skeleton"></div>
+          </div>
+        </div>
+      </section>
 
     </div>
   </main>
