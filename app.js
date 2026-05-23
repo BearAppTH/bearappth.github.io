@@ -12,7 +12,6 @@ const I18N = {
     'stat.verify':       'Verify on GitHub',
     'btn.download':      'Download APK',
     'btn.copy':          'Copy Link',
-    'btn.qr':            'QR Code',
     'btn.github':        'View on GitHub',
     'notes.header':      "What's new in",
     'notes.link':        'Full release notes',
@@ -29,8 +28,6 @@ const I18N = {
     'history.all':       'All releases →',
     'history.latest':    'latest',
     'history.notes':     'Notes',
-    'qr.title':          'Scan to Download',
-    'qr.hint':           'Point your Android camera at the code to download directly',
     'banner.text':       'Showing cached release data — could not reach GitHub API right now.',
     'copy.done':         'Copied!',
   },
@@ -43,7 +40,6 @@ const I18N = {
     'stat.verify':       'ตรวจสอบบน GitHub',
     'btn.download':      'ดาวน์โหลด APK',
     'btn.copy':          'คัดลอกลิงก์',
-    'btn.qr':            'คิวอาร์โค้ด',
     'btn.github':        'ดูบน GitHub',
     'notes.header':      'มีอะไรใหม่ใน',
     'notes.link':        'ดูรายละเอียดทั้งหมด',
@@ -60,8 +56,6 @@ const I18N = {
     'history.all':       'ทั้งหมด →',
     'history.latest':    'ล่าสุด',
     'history.notes':     'รายละเอียด',
-    'qr.title':          'สแกนเพื่อดาวน์โหลด',
-    'qr.hint':           'ชี้กล้อง Android ที่ QR Code เพื่อดาวน์โหลดโดยตรง',
     'banner.text':       'แสดงข้อมูลจาก cache — ไม่สามารถเชื่อมต่อ GitHub API ได้ในขณะนี้',
     'copy.done':         'คัดลอกแล้ว!',
   },
@@ -119,47 +113,6 @@ document.getElementById('themeToggle')?.addEventListener('click', () => {
 document.getElementById('langToggle')?.addEventListener('click', () => {
   applyLanguage(currentLang === 'en' ? 'th' : 'en');
 });
-
-/* ═══════════════════════════ QR Code ═══════════════════════════ */
-
-let qrInstance = null;
-let qrCurrentUrl = '';
-
-function openQrModal(url) {
-  const modal = document.getElementById('qrModal');
-  if (!modal) return;
-  modal.hidden = false;
-  document.body.style.overflow = 'hidden';
-
-  if (qrInstance && qrCurrentUrl === url) return;
-
-  const container = document.getElementById('qrcode');
-  container.innerHTML = '';
-  qrCurrentUrl = url;
-
-  if (typeof QRCode !== 'undefined') {
-    qrInstance = new QRCode(container, {
-      text:         url,
-      width:        210,
-      height:       210,
-      colorDark:    '#1f2328',
-      colorLight:   '#ffffff',
-      correctLevel: QRCode.CorrectLevel.M,
-    });
-  } else {
-    container.innerHTML = `<p style="color:var(--muted);font-size:.8rem">QR library not loaded.<br><a href="${escHtml(url)}" style="color:var(--blue)">Download link</a></p>`;
-  }
-}
-
-function closeQrModal() {
-  const modal = document.getElementById('qrModal');
-  if (modal) modal.hidden = true;
-  document.body.style.overflow = '';
-}
-
-document.getElementById('qrBackdrop')?.addEventListener('click', closeQrModal);
-document.getElementById('qrCloseBtn')?.addEventListener('click',  closeQrModal);
-document.addEventListener('keydown', e => { if (e.key === 'Escape') closeQrModal(); });
 
 /* ═══════════════════════════ Copy Link ═══════════════════════════ */
 
@@ -360,13 +313,9 @@ async function loadProject(project) {
   /* Apply fallback immediately */
   updateCard(card, { ...project.fallback, fileSize: null, dlCount: null });
 
-  /* Wire up copy & QR buttons */
+  /* Wire up copy button */
   card.querySelector('.js-copy-btn')?.addEventListener('click', function () {
     copyLink(this);
-  });
-  card.querySelector('.js-qr-btn')?.addEventListener('click', () => {
-    const url = card.querySelector('.js-download-btn')?.href || project.fallback.downloadUrl;
-    openQrModal(url);
   });
 
   try {
