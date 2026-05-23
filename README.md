@@ -1,12 +1,11 @@
 <div align="center">
 
-# &lt;BearAppTH /&gt;
+# &lt;BearAppTH /&gt; · Downloads
 
-**Full-Stack Developer · Thailand 🇹🇭**
+**Free and open-source Android apps by BearAppTH 🇹🇭**
 
-[![Website](https://img.shields.io/badge/Website-bearappth.github.io-58a6ff?style=flat-square&logo=github&logoColor=white)](https://bearappth.github.io)
-[![Email](https://img.shields.io/badge/Email-support@bearappth.co.th-58a6ff?style=flat-square&logo=gmail&logoColor=white)](mailto:support@bearappth.co.th)
-[![GitHub](https://img.shields.io/badge/GitHub-bearappth-58a6ff?style=flat-square&logo=github&logoColor=white)](https://github.com/bearappth)
+[![Website](https://img.shields.io/badge/Website-bearappth.github.io-3fb950?style=flat-square&logo=github&logoColor=white)](https://bearappth.github.io)
+[![GitHub](https://img.shields.io/badge/GitHub-BearAppTH-58a6ff?style=flat-square&logo=github&logoColor=white)](https://github.com/BearAppTH)
 
 </div>
 
@@ -14,19 +13,27 @@
 
 ## 🐻 About
 
-Personal portfolio website built with plain HTML, CSS, and vanilla JavaScript — no frameworks, no build step. Deployed automatically via GitHub Pages on every push to `main`.
+Download page for open-source Android apps developed by BearAppTH. Built with plain HTML, CSS, and vanilla JavaScript — no frameworks, no build step. Deployed automatically via GitHub Pages on every push to `main`.
+
+The download button for each project always points to the **latest published release** — fetched live from the GitHub Releases API on page load, with a hardcoded fallback so the button works even when the API is unavailable.
+
+---
+
+## 📦 Projects
+
+| Project | Description | Latest |
+|---|---|---|
+| **Bear MicroG** | Open-source Google Play Services alternative for Android | [![Release](https://img.shields.io/github/v/release/BearAppTH/MicroG-RE?style=flat-square&color=3fb950)](https://github.com/BearAppTH/MicroG-RE/releases/latest) |
 
 ---
 
 ## ✨ Features
 
-- **Dark / Modern design** — clean aesthetic with fluid animations
-- **Fully responsive** — mobile-first layout that adapts to every screen size automatically
-- **Typing animation** — rotating role titles in the hero section
-- **Scroll reveal** — elements animate in as they enter the viewport
-- **Mobile nav drawer** — smooth slide-in menu with scroll-lock and keyboard support
-- **Contact form** — client-side feedback state
-- **Accessible** — WCAG touch targets, `prefers-reduced-motion`, semantic HTML
+- **Live release data** — GitHub API fetched at runtime; version badge, file size, and download URL update automatically on every new release
+- **Hardcoded fallback** — download button always works, even offline or when API is rate-limited
+- **Dark theme** — GitHub-style dark palette with green download CTA
+- **Fully responsive** — mobile-first layout with fluid `clamp()` sizing
+- **No sign-up required** — direct APK download, no tracking
 
 ---
 
@@ -35,10 +42,11 @@ Personal portfolio website built with plain HTML, CSS, and vanilla JavaScript �
 | Layer | Technology |
 |---|---|
 | Markup | HTML5 (semantic) |
-| Styling | CSS3 — custom properties, `clamp()`, CSS Grid, Flexbox |
+| Styling | CSS3 — custom properties, `clamp()`, Flexbox |
 | Scripting | Vanilla JavaScript (ES2020+) |
 | Fonts | Inter + JetBrains Mono via Google Fonts |
 | Hosting | GitHub Pages |
+| Release data | GitHub Releases API |
 
 ---
 
@@ -46,36 +54,21 @@ Personal portfolio website built with plain HTML, CSS, and vanilla JavaScript �
 
 ```
 bearappth.github.io/
-├── index.html   # Page structure & content
-├── style.css    # Design system, layout, components, responsive rules
-├── main.js      # Nav drawer, typing effect, scroll reveal, contact form
+├── index.html   # Download page — project cards, buttons, release notes
+├── style.css    # Design system — dark theme, components, responsive rules
+├── app.js       # GitHub API fetcher — updates version/download/notes live
 └── CLAUDE.md    # AI assistant project rules
 ```
 
 ---
 
-## 🚀 Sections
+## 🚀 How the Download Button Works
 
-| Section | Description |
-|---|---|
-| **Hero** | Intro with animated typing role titles |
-| **About** | Background, stats, and availability status |
-| **Skills** | Tech stack grouped by Frontend / Backend / Database / DevOps |
-| **Projects** | Highlighted work with GitHub & live demo links |
-| **Contact** | Email, GitHub, location, and contact form |
-
----
-
-## 📐 Responsive Breakpoints
-
-| Breakpoint | Layout changes |
-|---|---|
-| `< 480px` | Single column, stacked buttons, compact spacing |
-| `480px` | Skills grid → 2 columns |
-| `560px` | Projects grid → 2 columns |
-| `640px` | About section → side-by-side |
-| `768px` | Contact grid → 2 columns, desktop nav replaces hamburger |
-| `960px` | Skills & Projects grids → full columns |
+1. Page loads with hardcoded fallback values (current latest release)
+2. `app.js` calls `https://api.github.com/repos/BearAppTH/<repo>/releases/latest`
+3. Finds the `.apk` asset and updates the button `href` to `browser_download_url`
+4. Version badge, file size, and release notes update to match the live release
+5. If the API fails, fallback values remain — the button is always functional
 
 ---
 
