@@ -71,19 +71,6 @@
     </div>
   </header>
 
-  <!-- ── QR MODAL ── -->
-  <div class="modal" id="qrModal" hidden role="dialog" aria-modal="true" aria-labelledby="qrModalLabel">
-    <div class="modal-backdrop" id="qrBackdrop"></div>
-    <div class="modal-card">
-      <div class="modal-header">
-        <h3 class="modal-title" id="qrModalLabel" data-i18n="qr.title">Scan to Download</h3>
-        <button class="modal-close-btn" id="qrCloseBtn" aria-label="Close">&times;</button>
-      </div>
-      <div id="qrcode" class="qr-canvas"></div>
-      <p class="modal-hint" data-i18n="qr.hint">Point your Android camera at the code to download directly</p>
-    </div>
-  </div>
-
   <!-- ── FETCH ERROR BANNER ── -->
   <div class="fetch-banner" id="fetchBanner" role="status" hidden>
     <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
@@ -187,10 +174,6 @@
           <button class="btn btn-ghost js-copy-btn" aria-label="Copy download link">
             <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>
             <span data-i18n="btn.copy">Copy Link</span>
-          </button>
-          <button class="btn btn-ghost js-qr-btn" aria-label="Show QR code">
-            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="3" height="3"/><rect x="18" y="14" width="3" height="3"/><rect x="14" y="18" width="3" height="3"/><rect x="18" y="18" width="3" height="3"/></svg>
-            <span data-i18n="btn.qr">QR Code</span>
           </button>
           <a href="https://github.com/BearAppTH/MicroG-RE"
              class="btn btn-outline"
@@ -296,7 +279,6 @@
     </div>
   </footer>
 
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js" integrity="sha512-CNgIRecGo7nphbeZ04Sc13ka07paqdeTu0WR1IM4kNcpmBAXAIn9x5E+XJbYHtFhec+B3yXhtHTLwutl6bYbs==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
   <script src="app.js"></script>
 </body>
 </html>
