@@ -202,6 +202,31 @@
           </a>
         </div>
 
+        <!-- Release History (collapsed by default) -->
+        <div class="history-section" id="history-section-microg">
+          <div class="history-section-header">
+            <button class="history-toggle" aria-expanded="false" aria-controls="microg-history-wrap">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><polyline points="12 8 12 12 14 14"/><circle cx="12" cy="12" r="10"/></svg>
+              <span data-i18n="history.title">Release History</span>
+              <svg class="history-toggle-chevron" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg>
+            </button>
+            <a href="https://github.com/BearAppTH/MicroG-RE/releases"
+               class="history-all-link"
+               target="_blank" rel="noopener noreferrer">
+              <span data-i18n="history.all">All releases →</span>
+            </a>
+          </div>
+          <div id="microg-history-wrap" hidden>
+            <div class="history-list" id="microg-history" aria-live="polite">
+              <div class="history-loading">
+                <div class="history-skeleton"></div>
+                <div class="history-skeleton"></div>
+                <div class="history-skeleton"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
       </article>
 
       <!-- ── INSTALL GUIDE ── -->
@@ -240,28 +265,6 @@
             </div>
           </li>
         </ol>
-      </section>
-
-      <!-- ── RELEASE HISTORY ── -->
-      <section class="history-section" id="history-section-microg">
-        <div class="history-section-header">
-          <h2 class="history-section-title">
-            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><polyline points="12 8 12 12 14 14"/><circle cx="12" cy="12" r="10"/></svg>
-            <span data-i18n="history.title">Release History</span>
-          </h2>
-          <a href="https://github.com/BearAppTH/MicroG-RE/releases"
-             class="history-all-link"
-             target="_blank" rel="noopener noreferrer">
-            <span data-i18n="history.all">All releases →</span>
-          </a>
-        </div>
-        <div class="history-list" id="microg-history" aria-live="polite">
-          <div class="history-loading">
-            <div class="history-skeleton"></div>
-            <div class="history-skeleton"></div>
-            <div class="history-skeleton"></div>
-          </div>
-        </div>
       </section>
 
     </div>
