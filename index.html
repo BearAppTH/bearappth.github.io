@@ -183,23 +183,26 @@
           </a>
         </div>
 
-        <!-- Release notes -->
+        <!-- Release notes (collapsed by default) -->
         <div class="release-notes">
-          <div class="release-notes-header">
+          <button class="release-notes-toggle" aria-expanded="false" aria-controls="microg-release-body">
             <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
             <span data-i18n="notes.header">What's new in</span>
             <span class="js-version">v3.0.1</span>
+            <svg class="release-notes-chevron" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg>
+          </button>
+          <div id="microg-release-body" hidden>
+            <p class="release-notes-body js-release-notes">
+              Fixed settings tab crash caused by platform/non-platform transition mismatch.
+              Updated app icon to Bear MicroG logo. Filled icon backgrounds to eliminate white corners.
+            </p>
+            <a href="https://github.com/BearAppTH/MicroG-RE/releases/latest"
+               class="release-full-link js-release-link"
+               target="_blank" rel="noopener noreferrer">
+              <span data-i18n="notes.link">Full release notes</span>
+              <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+            </a>
           </div>
-          <p class="release-notes-body js-release-notes">
-            Fixed settings tab crash caused by platform/non-platform transition mismatch.
-            Updated app icon to Bear MicroG logo. Filled icon backgrounds to eliminate white corners.
-          </p>
-          <a href="https://github.com/BearAppTH/MicroG-RE/releases/latest"
-             class="release-full-link js-release-link"
-             target="_blank" rel="noopener noreferrer">
-            <span data-i18n="notes.link">Full release notes</span>
-            <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
-          </a>
         </div>
 
         <!-- Release History (collapsed by default) -->

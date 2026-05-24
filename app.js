@@ -273,6 +273,16 @@ function renderHistory(containerId, releases) {
   }).join('');
 }
 
+/* Toggle release notes open/closed */
+document.addEventListener('click', e => {
+  const toggle = e.target.closest('.release-notes-toggle');
+  if (!toggle) return;
+  const expanded = toggle.getAttribute('aria-expanded') === 'true';
+  toggle.setAttribute('aria-expanded', String(!expanded));
+  const body = document.getElementById(toggle.getAttribute('aria-controls'));
+  if (body) body.hidden = expanded;
+});
+
 /* Toggle history section open/closed */
 document.addEventListener('click', e => {
   const toggle = e.target.closest('.history-toggle');

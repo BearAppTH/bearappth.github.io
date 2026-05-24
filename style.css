@@ -419,22 +419,44 @@ code {
   background: var(--bg);
   border: 1px solid var(--border);
   border-radius: var(--r-sm);
-  padding: 16px 18px;
+  overflow: hidden;
 }
-.release-notes-header {
+.release-notes-toggle {
   display: flex;
   align-items: center;
   gap: 7px;
+  width: 100%;
+  background: none;
+  border: none;
   font-family: var(--mono);
   font-size: .75rem;
   color: var(--muted);
-  margin-bottom: 10px;
+  cursor: pointer;
+  padding: 13px 18px;
+  text-align: left;
+  -webkit-tap-highlight-color: transparent;
+  transition: color var(--dur) var(--ease);
+}
+@media (hover: hover) {
+  .release-notes-toggle:hover { color: var(--text); }
+}
+.release-notes-chevron {
+  margin-left: auto;
+  flex-shrink: 0;
+  transition: transform var(--dur) var(--ease);
+}
+.release-notes-toggle[aria-expanded="true"] .release-notes-chevron {
+  transform: rotate(180deg);
+}
+#microg-release-body {
+  padding: 0 18px 14px;
+  border-top: 1px solid var(--border);
 }
 .release-notes-body {
   font-size: .85rem;
   color: var(--muted);
   line-height: 1.7;
-  margin-bottom: 12px;
+  margin: 12px 0;
   white-space: pre-wrap;
 }
 .release-full-link {
