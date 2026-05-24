@@ -582,31 +582,55 @@ code {
   line-height: 1.65;
 }
 
-/* ── Release history ── */
+/* ── Release history (inside project card) ── */
 .history-section {
-  margin-top: clamp(28px, 5vw, 48px);
+  margin-top: 20px;
+  border-top: 1px solid var(--border);
 }
 .history-section-header {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 12px;
-  margin-bottom: 16px;
-}
-.history-section-title {
-  display: flex;
-  align-items: center;
   gap: 8px;
-  font-size: 1rem;
+}
+.history-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  background: none;
+  border: none;
+  color: var(--text);
+  font-family: var(--sans);
+  font-size: .9rem;
   font-weight: 600;
+  cursor: pointer;
+  padding: 14px 0;
+  flex: 1;
+  min-width: 0;
+  text-align: left;
+  -webkit-tap-highlight-color: transparent;
+  transition: color var(--dur) var(--ease);
+}
+@media (hover: hover) {
+  .history-toggle:hover { color: var(--accent); }
+}
+.history-toggle-chevron {
+  color: var(--muted);
+  flex-shrink: 0;
+  transition: transform var(--dur) var(--ease);
+}
+.history-toggle[aria-expanded="true"] .history-toggle-chevron {
+  transform: rotate(180deg);
 }
 .history-all-link {
   font-size: .78rem;
   font-family: var(--mono);
   color: var(--blue);
   white-space: nowrap;
+  flex-shrink: 0;
 }
 @media (hover: hover) { .history-all-link:hover { text-decoration: underline; } }
+#microg-history-wrap { padding-bottom: 4px; }
 
 .history-list {
   background: var(--bg-card);

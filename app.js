@@ -273,7 +273,17 @@ function renderHistory(containerId, releases) {
   }).join('');
 }
 
-/* Click/keyboard to expand history items */
+/* Toggle history section open/closed */
+document.addEventListener('click', e => {
+  const toggle = e.target.closest('.history-toggle');
+  if (!toggle) return;
+  const expanded = toggle.getAttribute('aria-expanded') === 'true';
+  toggle.setAttribute('aria-expanded', String(!expanded));
+  const wrap = document.getElementById(toggle.getAttribute('aria-controls'));
+  if (wrap) wrap.hidden = expanded;
+});
+
+/* Expand individual history items */
 document.addEventListener('click', e => {
   const item = e.target.closest('.history-item[role="button"]');
   if (!item) return;
