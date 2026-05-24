@@ -28,7 +28,6 @@ const I18N = {
     'history.all':       'All releases →',
     'history.latest':    'latest',
     'history.notes':     'Notes',
-    'banner.text':       'Showing cached release data — could not reach GitHub API right now.',
     'copy.done':         'Copied!',
   },
   th: {
@@ -56,7 +55,6 @@ const I18N = {
     'history.all':       'ทั้งหมด →',
     'history.latest':    'ล่าสุด',
     'history.notes':     'รายละเอียด',
-    'banner.text':       'แสดงข้อมูลจาก cache — ไม่สามารถเชื่อมต่อ GitHub API ได้ในขณะนี้',
     'copy.done':         'คัดลอกแล้ว!',
   },
 };
@@ -366,7 +364,6 @@ async function loadProject(project) {
     renderHistory(project.historyId, releases);
 
   } catch {
-    document.getElementById('fetchBanner').hidden = false;
     const section = document.getElementById('history-section-microg');
     if (section) section.hidden = true;
   }
