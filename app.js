@@ -28,6 +28,8 @@ const I18N = {
     'history.all':       'All releases →',
     'history.latest':    'latest',
     'history.notes':     'Notes',
+    'youtube.desc':      'YouTube APK for Android.',
+    'ytmusic.desc':      'YouTube Music APK for Android.',
     'copy.done':         'Copied!',
   },
   th: {
@@ -55,6 +57,8 @@ const I18N = {
     'history.all':       'ทั้งหมด →',
     'history.latest':    'ล่าสุด',
     'history.notes':     'รายละเอียด',
+    'youtube.desc':      'YouTube APK สำหรับ Android',
+    'ytmusic.desc':      'YouTube Music APK สำหรับ Android',
     'copy.done':         'คัดลอกแล้ว!',
   },
 };
@@ -115,8 +119,10 @@ document.getElementById('langToggle')?.addEventListener('click', () => {
 /* ═══════════════════════════ Copy Link ═══════════════════════════ */
 
 function copyLink(btn) {
-  const card = btn.closest('[data-owner]');
-  const url  = card?.querySelector('.js-download-btn')?.href;
+  const card  = btn.closest('.project-card');
+  const dlBtn = card?.querySelector('.js-download-btn');
+  if (!dlBtn || dlBtn.getAttribute('href') === '#') return;
+  const url = dlBtn.href;
   if (!url) return;
 
   navigator.clipboard.writeText(url).then(() => {
@@ -322,19 +328,43 @@ const PROJECTS = [
       releaseUrl:  'https://github.com/BearAppTH/MicroG-RE/releases/tag/v3.0.1',
     },
   },
+  {
+    cardId:      'youtube',
+    type:        'static',
+    version:     '',
+    downloadUrl: '',
+  },
+  {
+    cardId:      'youtube-music',
+    type:        'static',
+    version:     '',
+    downloadUrl: '',
+  },
 ];
 
 async function loadProject(project) {
   const card = document.getElementById(project.cardId);
   if (!card) return;
 
-  /* Apply fallback immediately */
-  updateCard(card, { ...project.fallback, fileSize: null, dlCount: null });
-
-  /* Wire up copy button */
   card.querySelector('.js-copy-btn')?.addEventListener('click', function () {
     copyLink(this);
   });
+
+  /* Static project — URL stored in JS only, not fetched from API */
+  if (project.type === 'static') {
+    updateCard(card, {
+      version:     project.version     || null,
+      downloadUrl: project.downloadUrl || null,
+      fileSize:    null,
+      dlCount:     null,
+      notes:       null,
+      releaseUrl:  null,
+    });
+    return;
+  }
+
+  /* GitHub project — apply fallback then fetch live data */
+  updateCard(card, { ...project.fallback, fileSize: null, dlCount: null });
 
   try {
     const [release, releases, repo] = await Promise.all([
