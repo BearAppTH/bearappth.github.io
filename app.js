@@ -317,18 +317,6 @@ document.addEventListener('keydown', e => {
 
 const PROJECTS = [
   {
-    cardId:    'microg-re',
-    historyId: 'microg-history',
-    owner:     'BearAppTH',
-    repo:      'MicroG-RE',
-    fallback: {
-      version:     'v3.0.1',
-      downloadUrl: 'https://github.com/BearAppTH/MicroG-RE/releases/download/v3.0.1/bear-microg-v3.0.1.apk',
-      notes:       'Fixed settings tab crash caused by platform/non-platform transition mismatch. Updated app icon to Bear MicroG logo. Filled icon backgrounds to eliminate white corners.',
-      releaseUrl:  'https://github.com/BearAppTH/MicroG-RE/releases/tag/v3.0.1',
-    },
-  },
-  {
     cardId:      'youtube',
     type:        'static',
     version:     '',
@@ -339,6 +327,18 @@ const PROJECTS = [
     type:        'static',
     version:     '',
     downloadUrl: '',
+  },
+  {
+    cardId:    'microg-re',
+    historyId: 'microg-history',
+    owner:     'BearAppTH',
+    repo:      'MicroG-RE',
+    fallback: {
+      version:     'v3.0.1',
+      downloadUrl: 'https://github.com/BearAppTH/MicroG-RE/releases/download/v3.0.1/bear-microg-v3.0.1.apk',
+      notes:       'Fixed settings tab crash caused by platform/non-platform transition mismatch. Updated app icon to Bear MicroG logo. Filled icon backgrounds to eliminate white corners.',
+      releaseUrl:  'https://github.com/BearAppTH/MicroG-RE/releases/tag/v3.0.1',
+    },
   },
 ];
 
