@@ -319,8 +319,8 @@ const PROJECTS = [
   {
     cardId:      'youtube',
     type:        'static',
-    version:     '',
-    downloadUrl: '',
+    version:     'v21.17.482',
+    downloadUrl: 'https://pub-e102d8b287a14e2fa11b0303b3e628df.r2.dev/YouTube_21.17.482.apk',
   },
   {
     cardId:      'youtube-music',
