@@ -224,6 +224,9 @@ code {
 }
 
 /* ── Project card ── */
+.project-card + .project-card {
+  margin-top: clamp(20px, 4vw, 32px);
+}
 .project-card {
   background: var(--bg-card);
   border: 1.5px solid var(--border);
