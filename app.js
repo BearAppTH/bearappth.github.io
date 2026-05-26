@@ -28,8 +28,6 @@ const I18N = {
     'history.all':       'All releases →',
     'history.latest':    'latest',
     'history.notes':     'Notes',
-    'youtube.desc':      'YouTube APK for Android.',
-    'ytmusic.desc':      'YouTube Music APK for Android.',
     'copy.done':         'Copied!',
   },
   th: {
@@ -57,8 +55,6 @@ const I18N = {
     'history.all':       'ทั้งหมด →',
     'history.latest':    'ล่าสุด',
     'history.notes':     'รายละเอียด',
-    'youtube.desc':      'YouTube APK สำหรับ Android',
-    'ytmusic.desc':      'YouTube Music APK สำหรับ Android',
     'copy.done':         'คัดลอกแล้ว!',
   },
 };
@@ -316,18 +312,6 @@ document.addEventListener('keydown', e => {
 /* ═══════════════════════════ Project Loading ═══════════════════════════ */
 
 const PROJECTS = [
-  {
-    cardId:      'youtube',
-    type:        'static',
-    version:     'v21.17.482',
-    downloadUrl: 'https://pub-e102d8b287a14e2fa11b0303b3e628df.r2.dev/YouTube_21.17.482.apk',
-  },
-  {
-    cardId:      'youtube-music',
-    type:        'static',
-    version:     '',
-    downloadUrl: '',
-  },
   {
     cardId:    'microg-re',
     historyId: 'microg-history',
