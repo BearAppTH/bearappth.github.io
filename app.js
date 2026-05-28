@@ -12,6 +12,7 @@ const I18N = {
     'stat.verify':       'Verify on GitHub',
     'btn.download':      'Download APK',
     'btn.copy':          'Copy Link',
+    'btn.share':         'Share',
     'btn.github':        'View on GitHub',
     'notes.header':      "What's new in",
     'notes.link':        'Full release notes',
@@ -39,6 +40,7 @@ const I18N = {
     'stat.verify':       'ตรวจสอบบน GitHub',
     'btn.download':      'ดาวน์โหลด APK',
     'btn.copy':          'คัดลอกลิงก์',
+    'btn.share':         'แชร์',
     'btn.github':        'ดูบน GitHub',
     'notes.header':      'มีอะไรใหม่ใน',
     'notes.link':        'ดูรายละเอียดทั้งหมด',
@@ -131,6 +133,28 @@ function copyLink(btn) {
       btn.disabled = false;
     }, 2000);
   }).catch(() => {});
+}
+
+/* ═══════════════════════════ Share ═══════════════════════════ */
+
+function shareApp(btn) {
+  const card = btn.closest('.project-card');
+  const name = card?.querySelector('.project-name')?.textContent?.trim() || 'BearAppTH';
+  const dlBtn = card?.querySelector('.js-download-btn');
+  const url = (dlBtn && dlBtn.getAttribute('href') !== '#') ? dlBtn.href : location.href;
+  navigator.share({ title: name, text: `Download ${name} APK`, url }).catch(() => {});
+}
+
+/* ═══════════════════════════ JSON-LD ═══════════════════════════ */
+
+function updateJsonLd(version) {
+  const el = document.querySelector('script[type="application/ld+json"]');
+  if (!el) return;
+  try {
+    const data = JSON.parse(el.textContent);
+    if (data.mainEntity) data.mainEntity.softwareVersion = version.replace(/^v/, '');
+    el.textContent = JSON.stringify(data);
+  } catch {}
 }
 
 /* ═══════════════════════════ GitHub API ═══════════════════════════ */
@@ -334,6 +358,14 @@ async function loadProject(project) {
     copyLink(this);
   });
 
+  const shareBtn = card.querySelector('.js-share-btn');
+  if (shareBtn) {
+    if (navigator.share) {
+      shareBtn.hidden = false;
+      shareBtn.addEventListener('click', function () { shareApp(this); });
+    }
+  }
+
   /* Static project — URL stored in JS only, not fetched from API */
   if (project.type === 'static') {
     updateCard(card, {
@@ -373,6 +405,8 @@ async function loadProject(project) {
       language:  repo.language,
       langColor: LANG_COLORS[repo.language],
     });
+
+    updateJsonLd(release.tag_name || project.fallback.version);
 
     cachedReleases[project.historyId] = releases;
     renderHistory(project.historyId, releases);
