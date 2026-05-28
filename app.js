@@ -216,7 +216,7 @@ function escHtml(s) {
 
 /* ═══════════════════════════ Update Card ═══════════════════════════ */
 
-function updateCard(card, { version, downloadUrl, fileSize, dlCount, notes, releaseUrl }) {
+function updateCard(card, { version, downloadUrl, fileSize, dlCount, releaseDate, notes, releaseUrl }) {
   if (version) card.querySelectorAll('.js-version').forEach(el => { el.textContent = version; });
   const dlBtn = card.querySelector('.js-download-btn');
   if (dlBtn && downloadUrl) dlBtn.href = downloadUrl;
@@ -224,6 +224,14 @@ function updateCard(card, { version, downloadUrl, fileSize, dlCount, notes, rele
   if (sizeEl) sizeEl.textContent = fileSize || '—';
   const countEl = card.querySelector('.js-dl-count');
   if (countEl) countEl.textContent = dlCount != null ? dlCount : '—';
+  if (releaseDate) {
+    const dateEl  = card.querySelector('.js-release-date');
+    const dateStat = card.querySelector('.js-release-date-stat');
+    const dateSep  = card.querySelector('.js-release-date-sep');
+    if (dateEl)  dateEl.textContent = releaseDate;
+    if (dateStat) dateStat.hidden = false;
+    if (dateSep)  dateSep.hidden  = false;
+  }
   const notesEl = card.querySelector('.js-release-notes');
   if (notesEl && notes) notesEl.textContent = notes;
   const linkEl = card.querySelector('.js-release-link');
@@ -396,6 +404,7 @@ async function loadProject(project) {
       downloadUrl: apk?.browser_download_url || project.fallback.downloadUrl,
       fileSize:    apk ? fmtBytes(apk.size) : null,
       dlCount:     apk ? fmtCount(apk.download_count) : null,
+      releaseDate: release.published_at ? fmtDate(release.published_at) : null,
       notes:       stripMarkdown(release.body) || project.fallback.notes,
       releaseUrl:  release.html_url || project.fallback.releaseUrl,
     });
