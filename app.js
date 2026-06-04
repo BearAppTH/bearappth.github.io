@@ -7,7 +7,7 @@ const I18N = {
     'hero.eyebrow':      'Open Source · Free Forever',
     'hero.title':        'Downloads',
     'hero.sub':          'Free and open-source Android apps by <span class="accent">BearAppTH</span><br />Always the latest release — no sign-up required.',
-    'microg.desc':       'An open-source Google Play Services alternative for Android. Enables Google Account Authentication without requiring root access or the original Google Play Services — using package name <code>app.bear.android.gms</code>.',
+    'bearstore.desc':    'An open-source Android app store by BearAppTH. Browse and install BearAppTH apps directly from GitHub Releases — no Google Play required.',
     'stat.downloads':    'downloads',
     'stat.verify':       'Verify on GitHub',
     'btn.download':      'Download APK',
@@ -35,7 +35,7 @@ const I18N = {
     'hero.eyebrow':      'โอเพนซอร์ส · ฟรีตลอดไป',
     'hero.title':        'ดาวน์โหลด',
     'hero.sub':          'แอป Android โอเพนซอร์สฟรีโดย <span class="accent">BearAppTH</span><br />เวอร์ชันล่าสุดเสมอ — ไม่ต้องสมัครสมาชิก',
-    'microg.desc':       'ทางเลือก Google Play Services แบบโอเพนซอร์สสำหรับ Android รองรับการเข้าสู่ระบบด้วย Google Account โดยไม่ต้องรูทเครื่องหรือติดตั้ง Google Play Services ดั้งเดิม — ใช้ package name <code>app.bear.android.gms</code>.',
+    'bearstore.desc':    'แอปสโตร์ Android โอเพนซอร์สโดย BearAppTH เรียกดูและติดตั้งแอปของ BearAppTH ได้โดยตรงจาก GitHub Releases — ไม่ต้องผ่าน Google Play',
     'stat.downloads':    'ครั้งดาวน์โหลด',
     'stat.verify':       'ตรวจสอบบน GitHub',
     'btn.download':      'ดาวน์โหลด APK',
@@ -279,7 +279,7 @@ function renderHistory(containerId, releases) {
   if (!container) return;
 
   if (!releases?.length) {
-    const section = document.getElementById('history-section-microg');
+    const section = document.getElementById('history-section-bear-store');
     if (section) section.hidden = true;
     return;
   }
@@ -351,15 +351,15 @@ document.addEventListener('keydown', e => {
 
 const PROJECTS = [
   {
-    cardId:    'microg-re',
-    historyId: 'microg-history',
+    cardId:    'bear-store',
+    historyId: 'bear-store-history',
     owner:     'BearAppTH',
-    repo:      'MicroG-RE',
+    repo:      'BearApp',
     fallback: {
-      version:     'v3.0.1',
-      downloadUrl: 'https://github.com/BearAppTH/MicroG-RE/releases/download/v3.0.1/bear-microg-v3.0.1.apk',
-      notes:       'Fixed settings tab crash caused by platform/non-platform transition mismatch. Updated app icon to Bear MicroG logo. Filled icon backgrounds to eliminate white corners.',
-      releaseUrl:  'https://github.com/BearAppTH/MicroG-RE/releases/tag/v3.0.1',
+      version:     'v1.0.0',
+      downloadUrl: 'https://github.com/BearAppTH/BearApp/releases/latest',
+      notes:       'Visit the GitHub releases page to download the latest version.',
+      releaseUrl:  'https://github.com/BearAppTH/BearApp/releases/latest',
     },
   },
 ];
@@ -427,7 +427,7 @@ async function loadProject(project) {
     renderHistory(project.historyId, releases);
 
   } catch {
-    const section = document.getElementById('history-section-microg');
+    const section = document.getElementById('history-section-bear-store');
     if (section) section.hidden = true;
   }
 }
