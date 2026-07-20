@@ -38,41 +38,6 @@ The download button for each project always points to the **latest published rel
 
 ---
 
-## 🛠️ Tech Stack
-
-| Layer | Technology |
-|---|---|
-| Markup | HTML5 (semantic) |
-| Styling | CSS3 — custom properties, `clamp()`, Flexbox |
-| Scripting | Vanilla JavaScript (ES2020+) |
-| Fonts | JetBrains Mono + Bai Jamjuree via Google Fonts |
-| Hosting | GitHub Pages |
-| Release data | GitHub Releases API |
-
----
-
-## 📁 Structure
-
-```
-bearappth.github.io/
-├── index.html   # Download page — project cards, buttons, release notes
-├── style.css    # Design system — dark theme, components, responsive rules
-├── app.js       # GitHub API fetcher — updates version/download/notes live
-└── CLAUDE.md    # AI assistant project rules
-```
-
----
-
-## 🚀 How the Download Button Works
-
-1. Page loads with hardcoded fallback values (current latest release)
-2. `app.js` calls `https://api.github.com/repos/BearAppTH/<repo>/releases/latest`
-3. Finds the `.apk` asset and updates the button `href` to `browser_download_url`
-4. Version badge, file size, and release notes update to match the live release
-5. If the API fails, fallback values remain — the button is always functional
-
----
-
 ## 📄 License
 
 [MIT](LICENSE)
