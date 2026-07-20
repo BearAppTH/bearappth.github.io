@@ -23,7 +23,7 @@ The download button for each project always points to the **latest published rel
 
 | Project | Description | Latest |
 |---|---|---|
-| **Bear MicroG** | Open-source Google Play Services alternative for Android | [![Release](https://img.shields.io/github/v/release/BearAppTH/MicroG-RE?style=flat-square&color=3fb950)](https://github.com/BearAppTH/MicroG-RE/releases/latest) |
+| **Bear Store** | Open-source Android app store/installer (includes MicroG support) | [![Release](https://img.shields.io/github/v/release/BearAppTH/BearApp?style=flat-square&color=3fb950)](https://github.com/BearAppTH/BearApp/releases/latest) |
 
 ---
 
@@ -31,6 +31,7 @@ The download button for each project always points to the **latest published rel
 
 - **Live release data** — GitHub API fetched at runtime; version badge, file size, and download URL update automatically on every new release
 - **Hardcoded fallback** — download button always works, even offline or when API is rate-limited
+- **Bilingual (TH/EN)** — full Thai/English UI with a language toggle
 - **Dark theme** — GitHub-style dark palette with green download CTA
 - **Fully responsive** — mobile-first layout with fluid `clamp()` sizing
 - **No sign-up required** — direct APK download, no tracking
@@ -44,7 +45,7 @@ The download button for each project always points to the **latest published rel
 | Markup | HTML5 (semantic) |
 | Styling | CSS3 — custom properties, `clamp()`, Flexbox |
 | Scripting | Vanilla JavaScript (ES2020+) |
-| Fonts | Inter + JetBrains Mono via Google Fonts |
+| Fonts | JetBrains Mono + Bai Jamjuree via Google Fonts |
 | Hosting | GitHub Pages |
 | Release data | GitHub Releases API |
 
