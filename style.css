@@ -25,6 +25,7 @@
   --honey-dim:     rgba(224, 168, 62, .13);
   --honey-border:  rgba(224, 168, 62, .38);
   --on-honey:      #1c1207;
+  --link:          #f0c169;
 
   --radius:        18px;
   --r-sm:          12px;
@@ -55,6 +56,7 @@
   --honey-dim:     rgba(185, 129, 42, .1);
   --honey-border:  rgba(185, 129, 42, .32);
   --on-honey:      #fffaf0;
+  --link:          #8f6420;
   --shadow-card:   0 1px 2px rgba(90,70,30,.06), 0 12px 28px -18px rgba(90,70,30,.28);
   --shadow-pop:    0 8px 20px -8px rgba(185,129,42,.3);
 }
@@ -78,8 +80,7 @@ body {
   transition: background var(--dur) var(--ease), color var(--dur) var(--ease);
 }
 
-a { color: var(--honey-deep); text-decoration: none; }
-[data-theme="dark"] a { color: var(--honey-light); }
+a { color: var(--link); text-decoration: none; }
 @media (hover: hover) { a:hover { text-decoration: underline; } }
 code {
   font-family: var(--mono);
